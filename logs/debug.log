@@ -43,4 +43,13 @@
 - cloud: animate moves cloud continuously again (setInterval)
 - cloud: constructor takes imagePath and x; level1 has second cloud with 2.png
 - Endboss: walkSpeed 2, attackSpeed 5 (used when Pepe is closer than 250 px)
+- Added Chick (models/chick.class.js): extends Chicken, smaller (50x45), faster, starts at x 600-1800
+- level1: 3 chicks added; index.html: chick script
+- level: level_end_x 2780, camera_end_x 2160; Character: camera stops at level end
+- Chicken/Chick: start x passed as parameter; level1: 9 chickens, 7 chicks spread over the level
+- World: checkFastActions (40 ms) includes enemy collisions; stomping kills chickens/chicks (Pepe bounces)
+- World: damage only when Pepe is not hurt (1 s), chick 5, chicken 10, endboss 20
+- Added Coin (models/coin.class.js): pulsing coin with offset
+- level: coins list; level1: 12 coins in 4 arcs (createCoinArc), 2 extra bottles (1350 ground, 2150 air)
+- Character: coinCount; World: checkCoinPickup, collectCoin (5 coins = 1 bottle, coin bar resets), updateBottleBar (max 100%)
 - index.html: added script tags for new classes

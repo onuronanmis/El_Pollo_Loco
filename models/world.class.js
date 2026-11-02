@@ -19,11 +19,12 @@ class World{
         this.draw();
         this.setWorld();
         this.checkCollisions();
-        this.checkThrowActions();
+        this.checkFastActions();
     }
 
-    checkThrowActions(){
+    checkFastActions(){
         setInterval(() => {
+            this.checkEnemyCollisions();
             this.checkThrowing();
             this.checkBottleHits();
         }, 1000 / 25);
@@ -42,7 +43,7 @@ class World{
         bottle.throwBottle(this.character.otherDirection);
         this.thrownBottles.push(bottle);
         this.character.bottleCount--;
-        this.bottleBar.setPercentage(this.character.bottleCount * 20);
+        this.updateBottleBar();
         this.lastThrow = new Date().getTime();
     }
 
@@ -77,10 +78,10 @@ class World{
 
     checkCollisions(){
         setInterval(() => {
-            this.checkEnemyCollisions();
             this.checkGrinderFeeding();
             this.checkDrumstickPickup();
             this.checkBottlePickup();
+            this.checkCoinPickup();
         }, 200);
     }
 
@@ -88,20 +89,63 @@ class World{
         this.level.bottles = this.level.bottles.filter((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.character.bottleCount++;
-                this.bottleBar.setPercentage(this.character.bottleCount * 20);
+                this.updateBottleBar();
                 return false;
             }
             return true;
         });
     }
 
+    checkCoinPickup(){
+        this.level.coins = this.level.coins.filter((coin) => {
+            if (this.character.isColliding(coin)) {
+                this.collectCoin();
+                return false;
+            }
+            return true;
+        });
+    }
+
+    collectCoin(){
+        this.character.coinCount++;
+        if (this.character.coinCount == 5) {
+            this.character.coinCount = 0;
+            this.character.bottleCount++;
+            this.updateBottleBar();
+        }
+        this.coinBar.setPercentage(this.character.coinCount * 20);
+    }
+
+    updateBottleBar(){
+        this.bottleBar.setPercentage(Math.min(this.character.bottleCount * 20, 100));
+    }
+
     checkEnemyCollisions(){
         this.level.enemies.forEach((enemy) => {
-            if (!enemy.isDead() && this.character.isColliding(enemy)){
-                this.character.hit(enemy instanceof Endboss ? 10 : 5);
+            if (enemy.isDead() || !this.character.isColliding(enemy)) return;
+            if (this.isStomping(enemy)) {
+                this.stompEnemy(enemy);
+            } else if (!this.character.isHurt()) {
+                this.character.hit(this.getEnemyDamage(enemy));
                 this.healthBar.setPercentage(this.character.energy);
             }
         });
+    }
+
+    isStomping(enemy){
+        return enemy instanceof Chicken && this.character.isAboveGround() && this.character.speedY < 0;
+    }
+
+    stompEnemy(enemy){
+        enemy.die();
+        this.removeEnemyLater(enemy);
+        this.character.speedY = 15;
+    }
+
+    getEnemyDamage(enemy){
+        if (enemy instanceof Endboss) return 20;
+        if (enemy instanceof Chick) return 5;
+        return 10;
     }
 
     checkGrinderFeeding(){
@@ -134,6 +178,7 @@ class World{
 
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.clouds);
         this.addToMap(this.grinder);
         this.addToMap(this.character);

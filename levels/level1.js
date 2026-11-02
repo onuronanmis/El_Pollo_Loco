@@ -3,9 +3,8 @@ let level1;
 function initLevel() {
     level1 = new level(
         [
-            new Chicken(),
-            new Chicken(),
-            new Chicken(),
+            ...Array.from({ length: 9 }, (_, index) => new Chicken(500 + index * 200 + Math.random() * 100)),
+            ...Array.from({ length: 7 }, (_, index) => new Chick(650 + index * 230 + Math.random() * 100)),
             new Endboss(),
         ],
         [
@@ -46,6 +45,18 @@ function initLevel() {
             new Bottle(1150, false),
             new Bottle(1550, true),
             new Bottle(1950, false),
+            new Bottle(1350, false),
+            new Bottle(2150, true),
+        ],
+        [
+            ...createCoinArc(300),
+            ...createCoinArc(750),
+            ...createCoinArc(1250),
+            ...createCoinArc(1750),
         ]
     );
+}
+
+function createCoinArc(startX) {
+    return [new Coin(startX, 300), new Coin(startX + 70, 180), new Coin(startX + 140, 300)];
 }

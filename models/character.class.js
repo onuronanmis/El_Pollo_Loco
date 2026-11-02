@@ -4,6 +4,7 @@ class Character extends MovableObject {
   speed = 10;
   offset = { top: 110, bottom: 10, left: 20, right: 20 };
   bottleCount = 0;
+  coinCount = 0;
   IMAGES_WALKING = [
     "assets/img/2_character_pepe/2_walk/W-21.png",
     "assets/img/2_character_pepe/2_walk/W-22.png",
@@ -69,7 +70,7 @@ class Character extends MovableObject {
       if (this.world.keyboard.UP && !this.isAboveGround()) {
         this.jump();
       }
-      this.world.camera_x = -this.x + 100;
+      this.world.camera_x = -Math.min(this.x - 100, this.world.level.camera_end_x);
     }, 1000 / 60);
 
     setInterval(() => {
