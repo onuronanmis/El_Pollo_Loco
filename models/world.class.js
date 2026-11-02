@@ -1,5 +1,8 @@
 class World{
     character = new Character();
+    healthBar = new HealthBar();
+    coinBar = new CoinBar();
+    bottleBar = new BottleBar();
     level = level1;
     canvas;
     ctx;
@@ -25,8 +28,7 @@ class World{
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)){
                     this.character.hit();
-                    console.log('Collission with Charakter, energy', this.character.energy);
-                    
+                    this.healthBar.setPercentage(this.character.energy);
                 }
             });
         }, 200);
@@ -45,6 +47,10 @@ class World{
         this.addObjectsToMap(this.level.enemies);
 
         this.ctx.translate(-this.camera_x, 0);
+
+        this.addToMap(this.healthBar);
+        this.addToMap(this.coinBar);
+        this.addToMap(this.bottleBar);
 
         let self = this;
         requestAnimationFrame(function(){
