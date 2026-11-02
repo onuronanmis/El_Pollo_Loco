@@ -18,4 +18,21 @@
 - style.css: colorful Mexican village image as page background (cover, no scrollbar)
 - style.css: canvas centered vertically (justify-content: center)
 - index.html: removed h1 title (title is part of background image)
+- Added Bottle (models/bottle-splash-rotation.class.js): ground images, rotation in air, splash images preloaded
+- level: added bottles list; level1: 5 bottles (3 ground, 2 air) between start and endboss
+- World: draws level bottles
+- Bottle: air bottles lower (y 130) and slower rotation (250 ms)
+- MovableObject: added offset, isColliding uses offsets
+- Character: offset (110/10/20/20), bottleCount
+- Bottle: offset (15/10/20/20)
+- World: checkBottlePickup, bottle bar +20% per bottle
+- drawFrame shows offset hitbox, also for bottles (debug, remove before submission)
+- Bottle: throwBottle (curve + rotation), startSplash (splash animation), isAboveGround
+- World: throwing with SPACE (500 ms cooldown), thrownBottles, checkBottleHits, bottle bar -20% per throw
+- MovableObject: hit(damage = 5), fixed isDead typo
+- Chicken: dead image, stops moving when dead, die()
+- World: checkBottleHit (chicken dies, endboss -25), removeEnemyLater (1 s), dead enemies harmless and not ground
+- Bottle: horizontal throw speed 15
+- Endboss: rewritten - waits, alert once when Pepe < 500 px, chases Pepe, attack < 250 px, hurt (stops), death once; x 2400, offset
+- World: setWorld passes world to enemies, endboss deals 10 damage
 - index.html: added script tags for new classes
