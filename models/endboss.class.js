@@ -3,6 +3,8 @@ class Endboss extends MovableObject {
     width = 300;
     y = 10;
     speed = 2;
+    walkSpeed = 2;
+    attackSpeed = 5;
     offset = { top: 90, bottom: 40, left: 30, right: 20 };
     alertFrame = 0;
     deathFrame = 0;
@@ -73,6 +75,7 @@ class Endboss extends MovableObject {
     updateMovement(){
         if (!this.world || this.isDead() || this.isHurt() || !this.isAlertFinished()) return;
         let distanceX = this.getDistanceToPepe();
+        this.speed = Math.abs(distanceX) < 250 ? this.attackSpeed : this.walkSpeed;
         if (Math.abs(distanceX) < 10) return;
         if (distanceX > 0) {
             this.moveLeft();

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,8 +26,44 @@
     <script src="levels/level1.js"></script>
     <script src="scripts/game.js"></script>
 </head>
-<body onload="init()">
-    
-    <canvas id="canvas" width="720" height="480"></canvas>
+<body onload="initPage()">
+    <div class="game-container" id="game-container">
+        <canvas id="canvas" width="720" height="480"></canvas>
+
+        <div class="start-screen" id="start-screen">
+            <button class="start-button" id="start-button">Start</button>
+        </div>
+
+        <div class="level-screen display-none" id="level-screen">
+            <img class="level-image" src="assets/img/Level-1.webp" alt="Level 1">
+        </div>
+
+        <button class="mute-button" id="mute-button">🔊</button>
+        <button class="menu-button" id="menu-button">☰</button>
+    </div>
+
+    <div class="menu-overlay display-none" id="menu-overlay">
+        <div class="menu-content">
+            <button class="close-button" id="close-button">✕</button>
+            <h2>Spielanleitung</h2>
+            <p>Hilf Pepe im Kampf gegen die verrückten Hühner! Sammle Salsa-Flaschen und wirf sie auf die Gegner. Besiege das riesige Endboss-Huhn, um zu gewinnen.</p>
+
+            <h2>Steuerung</h2>
+            <ul class="control-list">
+                <li><b>← →</b> Laufen</li>
+                <li><b>↑</b> Springen</li>
+                <li><b>Leertaste</b> Flasche werfen</li>
+            </ul>
+
+            <h2>Gegenstände</h2>
+            <ul class="control-list">
+                <li><b>Salsa-Flasche</b> Munition zum Werfen</li>
+                <li><b>Keule</b> Gibt 10 Lebenspunkte</li>
+                <li><b>Walze</b> Macht aus Hühnern Keulen</li>
+            </ul>
+
+            <a class="imprint-link" href="impressum.html">Impressum</a>
+        </div>
+    </div>
 </body>
 </html>

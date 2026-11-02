@@ -35,4 +35,12 @@
 - Bottle: horizontal throw speed 15
 - Endboss: rewritten - waits, alert once when Pepe < 500 px, chases Pepe, attack < 250 px, hurt (stops), death once; x 2400, offset
 - World: setWorld passes world to enemies, endboss deals 10 damage
+- index.html: lang de, start screen (startscreen_1.png) with start button, level screen (Level-1.webp), mute button, burger menu with how to play, controls, items, impressum link
+- level1.js: level created in initLevel() instead of on page load
+- game.js: initPage, bindButtons (click listeners), startGame (level image 2.5 s, then level + world), toggleMute/loadMuteState/updateMuteButton (localStorage), openMenu/closeMenu; removed console.log
+- style.css: styles for game container, start/level screen, buttons, menu overlay, display-none
+- Added impressum.html with placeholder data
+- cloud: animate moves cloud continuously again (setInterval)
+- cloud: constructor takes imagePath and x; level1 has second cloud with 2.png
+- Endboss: walkSpeed 2, attackSpeed 5 (used when Pepe is closer than 250 px)
 - index.html: added script tags for new classes
