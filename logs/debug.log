@@ -15,4 +15,7 @@
 - Drumstick: static 48x43, placed in 12 free slots next to grinder, 500 ms after grinding
 - Drumstick is not collected while Pepe has 100 HP
 - Endboss is excluded from grinding, all other enemies are ground
+- style.css: colorful Mexican village image as page background (cover, no scrollbar)
+- style.css: canvas centered vertically (justify-content: center)
+- index.html: removed h1 title (title is part of background image)
 - index.html: added script tags for new classes

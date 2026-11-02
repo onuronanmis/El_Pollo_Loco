@@ -2,8 +2,13 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* background-image: url(./assets/img/Buntes\ mexikanisches\ Wüstendorf\ mit\ Kakteen.webp);
-    margin-top: 100px; */
+    justify-content: center;
+    margin: 0;
+    min-height: 100vh;
+    background-image: url("./assets/img/Buntes mexikanisches Wüstendorf mit Kakteen.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 canvas{
