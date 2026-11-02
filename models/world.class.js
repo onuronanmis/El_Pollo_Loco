@@ -3,6 +3,7 @@ class World{
     healthBar = new HealthBar();
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
+    grinder = new Grinder();
     level = level1;
     canvas;
     ctx;
@@ -25,13 +26,40 @@ class World{
 
     checkCollisions(){
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)){
-                    this.character.hit();
-                    this.healthBar.setPercentage(this.character.energy);
-                }
-            });
+            this.checkEnemyCollisions();
+            this.checkGrinderFeeding();
+            this.checkDrumstickPickup();
         }, 200);
+    }
+
+    checkEnemyCollisions(){
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)){
+                this.character.hit();
+                this.healthBar.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+    checkGrinderFeeding(){
+        this.level.enemies = this.level.enemies.filter((enemy) => {
+            if (!(enemy instanceof Endboss) && this.grinder.isAtIntake(enemy)) {
+                this.grinder.grind();
+                return false;
+            }
+            return true;
+        });
+    }
+
+    checkDrumstickPickup(){
+        this.grinder.drumsticks = this.grinder.drumsticks.filter((drumstick) => {
+            if (this.character.energy < 100 && this.character.isColliding(drumstick)) {
+                this.character.heal(10);
+                this.healthBar.setPercentage(this.character.energy);
+                return false;
+            }
+            return true;
+        });
     }
 
 
@@ -43,7 +71,11 @@ class World{
 
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
+        this.addToMap(this.grinder);
         this.addToMap(this.character);
+        this.addObjectsToMap(this.grinder.drumsticks);
+        this.grinder.updateFeathers();
+        this.grinder.feathers.forEach((feather) => feather.draw(this.ctx));
         this.addObjectsToMap(this.level.enemies);
 
         this.ctx.translate(-this.camera_x, 0);

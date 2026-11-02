@@ -37,6 +37,10 @@ class MovableObject extends DrawableObject{
         }
     }
 
+    heal(amount){
+        this.energy = Math.min(this.energy + amount, 100);
+    }
+
     isHurt(){
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;

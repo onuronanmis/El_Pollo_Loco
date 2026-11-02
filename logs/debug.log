@@ -1,0 +1,18 @@
+2026-11-02
+- Added StatusBar base class (models/status-bar.class.js) with setPercentage() and resolveImageIndex()
+- Added HealthBar, CoinBar, BottleBar (blue) in models/statusbar-*.class.js
+- Moved drawFrame() from MovableObject to DrawableObject
+- World: status bars drawn fixed on screen, health bar updates on hit, removed console.log
+- Added Grinder (models/grinder.class.js): permanent roller left of start, grinds chickens/chicks with feather animation
+- Added Drumstick (models/drumstick.class.js): spawned by grinder, flies to free spot next to it, +10 HP on pickup (max 100)
+- MovableObject: added heal(amount)
+- World: split checkCollisions into checkEnemyCollisions, checkGrinderFeeding, checkDrumstickPickup
+- Grinder does not damage Pepe (checkGrinderDamage removed)
+- Fixed size jump during grinding: frames drawn at original size (640x320, offset -250/-206)
+- Drumstick now original size (115x85) and starts where the animation ends
+- Replaced grinder logic with tested version: idle roller only (170x65), intake check, feather particles
+- Added Feather (models/feather.class.js): canvas-drawn feather particles
+- Drumstick: static 48x43, placed in 12 free slots next to grinder, 500 ms after grinding
+- Drumstick is not collected while Pepe has 100 HP
+- Endboss is excluded from grinding, all other enemies are ground
+- index.html: added script tags for new classes
