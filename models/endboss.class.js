@@ -124,6 +124,7 @@ class Endboss extends MovableObject {
      */
     playAlert(){
         if (this.alertFrame == 0 && Math.abs(this.getDistanceToPepe()) > 500) return;
+        if (this.alertFrame == 0) setBossFight(true);
         this.img = this.imageCache[this.IMAGES_ALERT[this.alertFrame]];
         this.alertFrame++;
     }
@@ -132,6 +133,7 @@ class Endboss extends MovableObject {
      * Plays the death animation once and keeps the last frame.
      */
     playDeathOnce(){
+        if (this.deathFrame == 0) setBossFight(false);
         if (this.deathFrame < this.IMAGES_DEAD.length) {
             this.img = this.imageCache[this.IMAGES_DEAD[this.deathFrame]];
             this.deathFrame++;

@@ -62,6 +62,7 @@ class Bottle extends MovableObject {
    * Stops the bottle and plays the splash animation once.
    */
   startSplash() {
+    playSound('bottleBreak');
     this.isSplashing = true;
     this.speedY = 0;
     this.acceleration = 0;

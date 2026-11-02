@@ -82,7 +82,18 @@ class World{
             this.checkDrumstickPickup();
             this.checkBottlePickup();
             this.checkCoinPickup();
+            this.updateEnemySounds();
         }, 200);
+    }
+
+    updateEnemySounds(){
+        let visibleEnemies = this.level.enemies.filter((enemy) => !enemy.isDead() && this.isOnScreen(enemy));
+        visibleEnemies.some((enemy) => enemy instanceof Chick) ? playLoop('chickWalk') : stopLoop('chickWalk');
+        visibleEnemies.some((enemy) => enemy instanceof Chicken && !(enemy instanceof Chick)) ? playLoop('chickenWalk') : stopLoop('chickenWalk');
+    }
+
+    isOnScreen(mo){
+        return mo.x + mo.width > -this.camera_x && mo.x < -this.camera_x + this.canvas.width;
     }
 
     checkBottlePickup(){
@@ -90,6 +101,7 @@ class World{
             if (this.character.isColliding(bottle)) {
                 this.character.bottleCount++;
                 this.updateBottleBar();
+                playSound('collect');
                 return false;
             }
             return true;
@@ -107,6 +119,7 @@ class World{
     }
 
     collectCoin(){
+        playSound('collect');
         this.character.coinCount++;
         if (this.character.coinCount == 5) {
             this.character.coinCount = 0;

@@ -52,4 +52,9 @@
 - Added Coin (models/coin.class.js): pulsing coin with offset
 - level: coins list; level1: 12 coins in 4 arcs (createCoinArc), 2 extra bottles (1350 ground, 2150 air)
 - Character: coinCount; World: checkCoinPickup, collectCoin (5 coins = 1 bottle, coin bar resets), updateBottleBar (max 100%)
+- Added scripts/sounds.js: background music, endboss music, game sounds, playSound/playLoop/stopLoop, setBossFight, updateMusicState
+- game.js: music starts on first click/keydown, mute stops all sounds
+- Sounds: jump + running (Character), splat (chicken/chick death, grinder), bottle break (splash), collect (coin/bottle)
+- World: updateEnemySounds (chicken/chick walking loop while visible), isOnScreen
+- Endboss: boss music on alert, back to background music on death
 - index.html: added script tags for new classes

@@ -69,7 +69,9 @@ class Character extends MovableObject {
 
       if (this.world.keyboard.UP && !this.isAboveGround()) {
         this.jump();
+        playSound('jump');
       }
+      this.updateRunningSound();
       this.world.camera_x = -Math.min(this.x - 100, this.world.level.camera_end_x);
     }, 1000 / 60);
 
@@ -86,6 +88,14 @@ class Character extends MovableObject {
         }
       }
     }, 50);
+  }
+
+  /**
+   * Plays the running sound while Pepe walks on the ground.
+   */
+  updateRunningSound() {
+    let isRunning = (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround();
+    isRunning ? playLoop('running') : stopLoop('running');
   }
 
   jump() {

@@ -12,6 +12,8 @@ let isMuted = false;
 function initPage() {
     loadMuteState();
     bindButtons();
+    document.addEventListener('click', updateMusicState, { once: true });
+    document.addEventListener('keydown', updateMusicState, { once: true });
 }
 
 
@@ -53,6 +55,7 @@ function toggleMute() {
     isMuted = !isMuted;
     localStorage.setItem('isMuted', isMuted);
     updateMuteButton();
+    updateMusicState();
 }
 
 

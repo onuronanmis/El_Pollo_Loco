@@ -37,6 +37,7 @@ class Chicken extends MovableObject{
      */
     die() {
         this.energy = 0;
+        playSound('splat');
     }
 
 

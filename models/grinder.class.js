@@ -48,6 +48,7 @@ class Grinder extends MovableObject {
    * Starts a feather burst and spawns a drumstick shortly after.
    */
   grind() {
+    playSound('splat');
     let intakeX = this.x + this.width - 28;
     for (let featherIndex = 0; featherIndex < 7; featherIndex++) {
       this.feathers.push(new Feather(intakeX, this.y + 10, featherIndex));
