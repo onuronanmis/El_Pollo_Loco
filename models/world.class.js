@@ -47,6 +47,7 @@ class World{
         this.character.bottleCount--;
         this.updateBottleBar();
         this.lastThrow = new Date().getTime();
+        this.convertCoinsToBottle();
     }
 
     checkBottleHits(){
@@ -114,7 +115,7 @@ class World{
 
     checkBottlePickup(){
         this.level.bottles = this.level.bottles.filter((bottle) => {
-            if (this.character.isColliding(bottle)) {
+            if (!this.isBottleBagFull() && this.character.isColliding(bottle)) {
                 this.character.bottleCount++;
                 this.updateBottleBar();
                 playSound('collect');
@@ -126,7 +127,7 @@ class World{
 
     checkCoinPickup(){
         this.level.coins = this.level.coins.filter((coin) => {
-            if (this.character.isColliding(coin)) {
+            if (this.character.coinCount < 5 && this.character.isColliding(coin)) {
                 this.collectCoin();
                 return false;
             }
@@ -137,12 +138,20 @@ class World{
     collectCoin(){
         playSound('collect');
         this.character.coinCount++;
-        if (this.character.coinCount == 5) {
-            this.character.coinCount = 0;
-            this.character.bottleCount++;
-            this.updateBottleBar();
-        }
         this.coinBar.setPercentage(this.character.coinCount * 20);
+        this.convertCoinsToBottle();
+    }
+
+    convertCoinsToBottle(){
+        if (this.character.coinCount < 5 || this.isBottleBagFull()) return;
+        this.character.coinCount = 0;
+        this.character.bottleCount++;
+        this.updateBottleBar();
+        this.coinBar.setPercentage(0);
+    }
+
+    isBottleBagFull(){
+        return this.character.bottleCount >= 5;
     }
 
     updateBottleBar(){

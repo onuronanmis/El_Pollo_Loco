@@ -73,4 +73,5 @@
 - index.html/style.css: pause button, pause screen with Hauptmenü, Neustart, Weiter; P in controls
 - Pause button only visible while the game is running
 - Removed drawFrame (blue debug hitboxes) from DrawableObject and World.addToMap
+- World: max 5 bottles (isBottleBagFull), max 5 coins; convertCoinsToBottle on 5th coin or after a throw when space is free
 - index.html: added script tags for new classes
