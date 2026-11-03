@@ -9,6 +9,10 @@ class Chick extends Chicken {
     ];
     IMAGE_DEAD = 'assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png';
 
+    /**
+     * Creates a small, faster chick.
+     * @param {number} x - Start position.
+     */
     constructor(x){
         super(x);
         this.loadImage(this.IMAGES_WALKING[0]);

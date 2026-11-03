@@ -1,15 +1,18 @@
 let level1;
 
+/**
+ * Creates level 1 with enemies, clouds, background, bottles and coins.
+ */
 function initLevel() {
-    level1 = new level(
+    level1 = new Level(
         [
             ...Array.from({ length: 9 }, (_, index) => new Chicken(500 + index * 200 + Math.random() * 100)),
             ...Array.from({ length: 7 }, (_, index) => new Chick(650 + index * 230 + Math.random() * 100)),
             new Endboss(),
         ],
         [
-            new cloud('assets/img/5_background/layers/4_clouds/1.png', Math.random() * 500),
-            new cloud('assets/img/5_background/layers/4_clouds/2.png', 720 + Math.random() * 500),
+            new Cloud('assets/img/5_background/layers/4_clouds/1.png', Math.random() * 500),
+            new Cloud('assets/img/5_background/layers/4_clouds/2.png', 720 + Math.random() * 500),
         ],
         [
             new BackgroundObject('assets/img/5_background/layers/air.png', -720*2),
@@ -57,6 +60,11 @@ function initLevel() {
     );
 }
 
+/**
+ * Creates three coins in an arc.
+ * @param {number} startX - Position of the first coin.
+ * @returns {Coin[]}
+ */
 function createCoinArc(startX) {
     return [new Coin(startX, 300), new Coin(startX + 70, 180), new Coin(startX + 140, 300)];
 }

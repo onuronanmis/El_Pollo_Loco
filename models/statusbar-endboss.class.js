@@ -10,6 +10,9 @@ class EndbossBar extends StatusBar {
     "assets/img/7_statusbars/2_statusbar_endboss/blue/blue100.png",
   ];
 
+  /**
+   * Creates the status bar and preloads its images.
+   */
   constructor() {
     super();
     this.loadImages(this.IMAGES);

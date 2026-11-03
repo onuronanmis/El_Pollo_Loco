@@ -4,6 +4,11 @@ class BackgroundObject extends MovableObject{
     width = 720;
     height = 480;
 
+    /**
+     * Creates a background layer at the bottom of the canvas.
+     * @param {string} imagePath - Path of the layer image.
+     * @param {number} x - Horizontal position.
+     */
     constructor(imagePath, x){
         super().loadImage(imagePath);
 

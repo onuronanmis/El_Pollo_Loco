@@ -93,3 +93,6 @@
 - index.html: added script tags for new classes
 - Character: knockBack (push away from enemy with small bounce), applyKnockback (slows down, stays in level borders)
 - World: chicken/chick contact knocks Pepe back, endboss does not
+- Renamed classes cloud -> Cloud, level -> Level (level1.js updated)
+- Renamed keybord.class.js -> keyboard.class.js (index.html updated)
+- Added JSDoc to all remaining functions and constructors

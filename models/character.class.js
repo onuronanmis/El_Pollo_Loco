@@ -75,6 +75,9 @@ class Character extends MovableObject {
   lastActionTime = new Date().getTime();
   IMAGE_GRAVE = "assets/img/2_character_pepe/5_dead/Pepe am Grab mit Sombrero.webp";
 
+  /**
+   * Creates Pepe, preloads all images and starts gravity and animation.
+   */
   constructor() {
     super().loadImage("assets/img/2_character_pepe/2_walk/W-21.png");
     this.loadImages(this.IMAGES_WALKING);
@@ -88,6 +91,9 @@ class Character extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Starts the movement and animation intervals.
+   */
   animate() {
     setStoppableInterval(() => this.moveCharacter(), 1000 / 60);
     setStoppableInterval(() => this.playCharacterAnimation(), 50);
@@ -240,6 +246,9 @@ class Character extends MovableObject {
     isRunning ? playLoop('running') : stopLoop('running');
   }
 
+  /**
+   * Starts a jump of Pepe.
+   */
   jump() {
     this.speedY = 30;
   }

@@ -7,6 +7,11 @@ class Coin extends MovableObject {
         'assets/img/8_coin/coin_2.png'
     ];
 
+    /**
+     * Creates a pulsing coin.
+     * @param {number} x - Horizontal position.
+     * @param {number} y - Vertical position.
+     */
     constructor(x, y){
         super().loadImage(this.IMAGES_COIN[0]);
         this.loadImages(this.IMAGES_COIN);

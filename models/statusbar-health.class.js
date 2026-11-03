@@ -9,6 +9,9 @@ class HealthBar extends StatusBar {
     "assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png",
   ];
 
+  /**
+   * Creates the status bar and preloads its images.
+   */
   constructor() {
     super();
     this.loadImages(this.IMAGES);

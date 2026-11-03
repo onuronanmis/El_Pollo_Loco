@@ -9,6 +9,10 @@ class Chicken extends MovableObject{
     ];
     IMAGE_DEAD = 'assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png';
 
+    /**
+     * Creates a chicken with a random speed.
+     * @param {number} x - Start position.
+     */
     constructor(x){
         super().loadImage('assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -18,6 +22,9 @@ class Chicken extends MovableObject{
         this.animate();
     }
 
+        /**
+         * Moves the chicken to the left and plays its walking or dead image.
+         */
         animate() {
             setStoppableInterval(() => {
                 if (!this.isDead()) this.moveLeft();

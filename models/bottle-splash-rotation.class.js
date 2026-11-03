@@ -25,6 +25,11 @@ class Bottle extends MovableObject {
     "assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
   ];
 
+  /**
+   * Creates a collectable bottle on the ground or in the air.
+   * @param {number} x - Horizontal position.
+   * @param {boolean} isInAir - Whether the bottle floats and rotates.
+   */
   constructor(x, isInAir) {
     super().loadImage(this.IMAGES_GROUND[Math.round(Math.random())]);
     this.loadImages(this.IMAGES_ROTATION);

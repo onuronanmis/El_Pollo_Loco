@@ -9,6 +9,9 @@ class BottleBar extends StatusBar {
     "assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
   ];
 
+  /**
+   * Creates the status bar and preloads its images.
+   */
   constructor() {
     super();
     this.loadImages(this.IMAGES);

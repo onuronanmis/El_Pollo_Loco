@@ -20,6 +20,9 @@ class Grinder extends MovableObject {
     "assets/img/Walze/walze/frame_11.png",
   ];
 
+  /**
+   * Creates the grinder and starts its idle animation.
+   */
   constructor() {
     super().loadImage(this.IMAGES_IDLE[0]);
     this.loadImages(this.IMAGES_IDLE);

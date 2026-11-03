@@ -1,4 +1,10 @@
 class Feather {
+  /**
+   * Creates a feather particle.
+   * @param {number} x - Start x position.
+   * @param {number} y - Start y position.
+   * @param {number} featherIndex - Index used for direction and color.
+   */
   constructor(x, y, featherIndex) {
     this.x = x;
     this.y = y;
