@@ -98,3 +98,4 @@
 - Added JSDoc to all remaining functions and constructors
 - index.html: story section in menu
 - Fullscreen button (always visible, between pause and mute): toggleFullscreen, initFullscreenButton, hidden if not supported; game container fills screen in fullscreen (3:2)
+- Added README.md (story, features, controls, tech, credits)
