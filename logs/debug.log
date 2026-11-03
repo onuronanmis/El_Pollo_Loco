@@ -64,4 +64,13 @@
 - All classes: setInterval replaced by setStoppableInterval
 - World: checkGameEnd (win screen 2 s after endboss death), animationFrameId + stopDrawing
 - index.html/style.css: win screen (You won A.png) with buttons Hauptmenü and Nächstes Level
+- Character: animate split into moveCharacter, handleWalking, playCharacterAnimation; no control when dead
+- Character: playDeathOnce (death animation once, 150 ms per frame), showGrave (grave image)
+- World: checkGameEnd handles win and lose, endGame (lose screen 4 s after death)
+- game.js: showLoseScreen, restartGame, hideEndScreens, bindEndScreenButtons; stopGame resets boss music
+- index.html: lose screen (Game over A.png) with buttons Hauptmenü and Neustart
+- game.js: pause (isPaused checked in setStoppableInterval), togglePause, bindPauseButtons, key P; stopGame resets pause and marks world as over
+- index.html/style.css: pause button, pause screen with Hauptmenü, Neustart, Weiter; P in controls
+- Pause button only visible while the game is running
+- Removed drawFrame (blue debug hitboxes) from DrawableObject and World.addToMap
 - index.html: added script tags for new classes

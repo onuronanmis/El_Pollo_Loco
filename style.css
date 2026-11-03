@@ -57,7 +57,7 @@ canvas{
     height: 80%;
 }
 
-.mute-button, .menu-button{
+.mute-button, .menu-button, .pause-button{
     position: absolute;
     top: 10px;
     width: 40px;
@@ -71,6 +71,16 @@ canvas{
 
 .mute-button{
     right: 60px;
+}
+
+.pause-button{
+    right: 110px;
+}
+
+.pause-title{
+    font-size: 64px;
+    font-weight: bold;
+    color: white;
 }
 
 .menu-button{

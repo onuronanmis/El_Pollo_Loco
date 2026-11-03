@@ -5,6 +5,7 @@ let world;
 let keyboard = new Keyboard();
 let isMuted = false;
 let intervalIds = [];
+let isPaused = false;
 
 
 /**
@@ -26,11 +27,52 @@ function bindButtons() {
     document.getElementById('mute-button').addEventListener('click', toggleMute);
     document.getElementById('menu-button').addEventListener('click', openMenu);
     document.getElementById('close-button').addEventListener('click', closeMenu);
-    document.getElementById('menu-return-button').addEventListener('click', returnToMenu);
-    document.getElementById('next-level-button').addEventListener('click', startNextLevel);
     document.getElementById('menu-overlay').addEventListener('click', (event) => {
         if (event.target.id == 'menu-overlay') closeMenu();
     });
+    bindEndScreenButtons();
+    bindPauseButtons();
+}
+
+
+/**
+ * Connects the buttons of the pause screen.
+ */
+function bindPauseButtons() {
+    document.getElementById('pause-button').addEventListener('click', togglePause);
+    document.getElementById('resume-button').addEventListener('click', togglePause);
+    document.getElementById('pause-restart-button').addEventListener('click', () => {
+        stopGame();
+        restartGame();
+    });
+    document.getElementById('pause-menu-button').addEventListener('click', () => {
+        stopGame();
+        returnToMenu();
+    });
+}
+
+
+/**
+ * Pauses or resumes the running game.
+ */
+function togglePause() {
+    if (!world || world.isGameOver) return;
+    document.activeElement.blur();
+    isPaused = !isPaused;
+    document.getElementById('pause-screen').classList.toggle('display-none', !isPaused);
+    document.getElementById('pause-button').textContent = isPaused ? '▶' : '⏸';
+    if (isPaused) Object.values(GAME_SOUNDS).forEach((sound) => sound.pause());
+}
+
+
+/**
+ * Connects the buttons of the win and lose screens.
+ */
+function bindEndScreenButtons() {
+    document.getElementById('menu-return-button').addEventListener('click', returnToMenu);
+    document.getElementById('next-level-button').addEventListener('click', startNextLevel);
+    document.getElementById('lose-menu-button').addEventListener('click', returnToMenu);
+    document.getElementById('restart-button').addEventListener('click', restartGame);
 }
 
 
@@ -46,6 +88,7 @@ function startGame() {
         initLevel();
         canvas = document.getElementById('canvas');
         world = new World(canvas, keyboard);
+        document.getElementById('pause-button').classList.remove('display-none');
     }, 2500);
 }
 
@@ -103,7 +146,9 @@ function closeMenu() {
  * @returns {number} The interval id.
  */
 function setStoppableInterval(callback, time) {
-    let intervalId = setInterval(callback, time);
+    let intervalId = setInterval(() => {
+        if (!isPaused) callback();
+    }, time);
     intervalIds.push(intervalId);
     return intervalId;
 }
@@ -116,7 +161,13 @@ function stopGame() {
     intervalIds.forEach((intervalId) => clearInterval(intervalId));
     intervalIds = [];
     world.stopDrawing();
+    world.isGameOver = true;
+    isPaused = false;
+    document.getElementById('pause-screen').classList.add('display-none');
+    document.getElementById('pause-button').textContent = '⏸';
+    document.getElementById('pause-button').classList.add('display-none');
     Object.values(GAME_SOUNDS).forEach((sound) => sound.pause());
+    setBossFight(false);
 }
 
 
@@ -134,7 +185,7 @@ function showWinScreen() {
  */
 function returnToMenu() {
     document.activeElement.blur();
-    document.getElementById('win-screen').classList.add('display-none');
+    hideEndScreens();
     document.getElementById('start-screen').classList.remove('display-none');
 }
 
@@ -143,8 +194,35 @@ function returnToMenu() {
  * Starts the next level. Until level 2 exists, level 1 is started again.
  */
 function startNextLevel() {
-    document.getElementById('win-screen').classList.add('display-none');
+    hideEndScreens();
     startGame();
+}
+
+
+/**
+ * Stops the game and shows the lose screen.
+ */
+function showLoseScreen() {
+    stopGame();
+    document.getElementById('lose-screen').classList.remove('display-none');
+}
+
+
+/**
+ * Starts the current level again.
+ */
+function restartGame() {
+    hideEndScreens();
+    startGame();
+}
+
+
+/**
+ * Hides the win and lose screens.
+ */
+function hideEndScreens() {
+    document.getElementById('win-screen').classList.add('display-none');
+    document.getElementById('lose-screen').classList.add('display-none');
 }
 
 
@@ -171,5 +249,8 @@ function setKeyState(event, isPressed) {
 }
 
 
-window.addEventListener('keydown', (event) => setKeyState(event, true));
+window.addEventListener('keydown', (event) => {
+    if (event.code == 'KeyP' && !event.repeat) togglePause();
+    setKeyState(event, true);
+});
 window.addEventListener('keyup', (event) => setKeyState(event, false));

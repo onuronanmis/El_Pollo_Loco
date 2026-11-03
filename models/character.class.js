@@ -44,6 +44,8 @@ class Character extends MovableObject {
   
 
   world;
+  deathTime = 0;
+  IMAGE_GRAVE = "assets/img/2_character_pepe/5_dead/Pepe am Grab mit Sombrero.webp";
 
   constructor() {
     super().loadImage("assets/img/2_character_pepe/2_walk/W-21.png");
@@ -51,43 +53,80 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_JUMPING);
     this.loadImages(this.IMAGES_DEAD);
     this.loadImages(this.IMAGES_HURT);
+    this.loadImages([this.IMAGE_GRAVE]);
     this.applyGravity();
     this.animate();
   }
 
   animate() {
-    setStoppableInterval(() => {
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-        this.moveRight();
-        this.otherDirection = false;
-      }
+    setStoppableInterval(() => this.moveCharacter(), 1000 / 60);
+    setStoppableInterval(() => this.playCharacterAnimation(), 50);
+  }
 
-      if (this.world.keyboard.LEFT && this.x > -520) {
-        this.moveLeft();
-        this.otherDirection = true;
-      }
+  /**
+   * Moves Pepe according to the pressed keys and updates the camera.
+   */
+  moveCharacter() {
+    if (this.isDead()) return stopLoop('running');
+    this.handleWalking();
+    if (this.world.keyboard.UP && !this.isAboveGround()) {
+      this.jump();
+      playSound('jump');
+    }
+    this.updateRunningSound();
+    this.world.camera_x = -Math.min(this.x - 100, this.world.level.camera_end_x);
+  }
 
-      if (this.world.keyboard.UP && !this.isAboveGround()) {
-        this.jump();
-        playSound('jump');
-      }
-      this.updateRunningSound();
-      this.world.camera_x = -Math.min(this.x - 100, this.world.level.camera_end_x);
-    }, 1000 / 60);
+  /**
+   * Moves Pepe left or right within the level borders.
+   */
+  handleWalking() {
+    if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+      this.moveRight();
+      this.otherDirection = false;
+    }
+    if (this.world.keyboard.LEFT && this.x > -520) {
+      this.moveLeft();
+      this.otherDirection = true;
+    }
+  }
 
-    setStoppableInterval(() => {
-      if (this.isDead()) {
-        this.playAnimation(this.IMAGES_DEAD);
-      } else if (this.isHurt()){
-        this.playAnimation(this.IMAGES_HURT);
-      } else if (this.isAboveGround()) {
-        this.playAnimation(this.IMAGES_JUMPING);
-      } else {
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-          this.playAnimation(this.IMAGES_WALKING);
-        }
-      }
-    }, 50);
+  /**
+   * Chooses the animation for Pepe's current state.
+   */
+  playCharacterAnimation() {
+    if (this.isDead()) {
+      this.playDeathOnce();
+    } else if (this.isHurt()) {
+      this.playAnimation(this.IMAGES_HURT);
+    } else if (this.isAboveGround()) {
+      this.playAnimation(this.IMAGES_JUMPING);
+    } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+      this.playAnimation(this.IMAGES_WALKING);
+    }
+  }
+
+  /**
+   * Plays the death animation once, then shows Pepe's grave.
+   */
+  playDeathOnce() {
+    if (!this.deathTime) this.deathTime = new Date().getTime();
+    let frameIndex = Math.floor((new Date().getTime() - this.deathTime) / 150);
+    if (frameIndex < this.IMAGES_DEAD.length) {
+      this.img = this.imageCache[this.IMAGES_DEAD[frameIndex]];
+    } else {
+      this.showGrave();
+    }
+  }
+
+  /**
+   * Replaces Pepe with his grave on the ground.
+   */
+  showGrave() {
+    this.img = this.imageCache[this.IMAGE_GRAVE];
+    this.width = 160;
+    this.height = 146;
+    this.y = 290;
   }
 
   /**

@@ -90,10 +90,16 @@ class World{
     }
 
     checkGameEnd(){
+        if (this.isGameOver) return;
         let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss);
-        if (this.isGameOver || !endboss.isDead()) return;
+        if (endboss.isDead()) this.endGame(showWinScreen, 2000);
+        if (this.character.isDead()) this.endGame(showLoseScreen, 4000);
+    }
+
+    endGame(showEndScreen, delay){
+        if (this.isGameOver) return;
         this.isGameOver = true;
-        setTimeout(() => showWinScreen(), 2000);
+        setTimeout(() => showEndScreen(), delay);
     }
 
     updateEnemySounds(){
@@ -239,7 +245,6 @@ class World{
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
