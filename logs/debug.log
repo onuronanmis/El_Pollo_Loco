@@ -80,4 +80,5 @@
 - World: getEndboss helper; endboss hit plays endbossHit sound (endboss-chicken.mp3)
 - sounds.js: endboss music now endboss-level1scream.mp3
 - index.html/impressum.html: favicon (Favicon-El-Pollo-Loco.webp)
+- Character: start y 155 (on the ground, no fall at game start)
 - index.html: added script tags for new classes

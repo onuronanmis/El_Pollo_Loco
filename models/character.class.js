@@ -1,6 +1,6 @@
 class Character extends MovableObject {
   height = 280;
-  y = 55;
+  y = 155;
   speed = 10;
   offset = { top: 110, bottom: 10, left: 20, right: 20 };
   bottleCount = 0;
