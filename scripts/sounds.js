@@ -1,5 +1,5 @@
 const BACKGROUND_MUSIC = createSound('audio/alex-morgan-flamenco-spanish-guitar-fire-passion-530943.mp3', 0.2, true);
-const ENDBOSS_MUSIC = createSound('audio/endboss-sound.mp3', 0.3, true);
+const ENDBOSS_MUSIC = createSound('audio/endboss-level1scream.mp3', 0.3, true);
 const GAME_SOUNDS = {
     jump: createSound('audio/retro_jump.mp3', 0.4),
     running: createSound('audio/running-sound.mp3', 0.4, true),
@@ -8,6 +8,7 @@ const GAME_SOUNDS = {
     splat: createSound('audio/universfield-wet-splat-impact-567197.mp3', 0.5),
     chickenWalk: createSound('audio/hühnchen.mp3', 0.3, true),
     chickWalk: createSound('audio/kücken-sound.mp3', 0.3, true),
+    endbossHit: createSound('audio/endboss-chicken.mp3', 0.5),
     snoring: createSound('audio/audiopapkin-male-snoring-297875.mp3', 0.3, true),
 };
 let isBossFight = false;

@@ -76,4 +76,8 @@
 - World: max 5 bottles (isBottleBagFull), max 5 coins; convertCoinsToBottle on 5th coin or after a throw when space is free
 - Character: idle animation, sleep animation after 10 s without action with snoring (updateLastAction, isSleeping, playIdleAnimation, playTimedAnimation, stopCharacterSounds)
 - sounds.js: snoring sound
+- Added EndbossBar (models/statusbar-endboss.class.js), visible after endboss alert, updates on bottle hit
+- World: getEndboss helper; endboss hit plays endbossHit sound (endboss-chicken.mp3)
+- sounds.js: endboss music now endboss-level1scream.mp3
+- index.html/impressum.html: favicon (Favicon-El-Pollo-Loco.webp)
 - index.html: added script tags for new classes

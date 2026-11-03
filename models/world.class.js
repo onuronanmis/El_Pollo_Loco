@@ -3,6 +3,7 @@ class World{
     healthBar = new HealthBar();
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
+    endbossBar = new EndbossBar();
     grinder = new Grinder();
     thrownBottles = [];
     lastThrow = 0;
@@ -62,6 +63,8 @@ class World{
         bottle.startSplash();
         if (enemy instanceof Endboss) {
             enemy.hit(25);
+            this.endbossBar.setPercentage(enemy.energy);
+            playSound('endbossHit');
         } else {
             enemy.die();
             this.removeEnemyLater(enemy);
@@ -92,9 +95,12 @@ class World{
 
     checkGameEnd(){
         if (this.isGameOver) return;
-        let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss);
-        if (endboss.isDead()) this.endGame(showWinScreen, 2000);
+        if (this.getEndboss().isDead()) this.endGame(showWinScreen, 2000);
         if (this.character.isDead()) this.endGame(showLoseScreen, 4000);
+    }
+
+    getEndboss(){
+        return this.level.enemies.find((enemy) => enemy instanceof Endboss);
     }
 
     endGame(showEndScreen, delay){
@@ -231,6 +237,7 @@ class World{
         this.addToMap(this.healthBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
+        if (this.getEndboss().alertFrame > 0) this.addToMap(this.endbossBar);
 
         let self = this;
         this.animationFrameId = requestAnimationFrame(function(){
