@@ -101,3 +101,5 @@
 - Added README.md (story, features, controls, tech, credits)
 - README.md translated to English
 - README.md: German first, English below, language links at top
+- Mobile: rotate hint and portrait pause only on touch devices (pointer: coarse), no hint on PC/laptop
+- game.js: renamed button -> touchButton in bindTouchButtons

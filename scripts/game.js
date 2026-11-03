@@ -288,7 +288,7 @@ function setGameButtonsVisible(isVisible) {
 }
 
 
-const PORTRAIT_QUERY = window.matchMedia('(orientation: portrait) and (max-width: 1024px)');
+const PORTRAIT_QUERY = window.matchMedia('(orientation: portrait) and (pointer: coarse)');
 
 
 /**
@@ -312,11 +312,11 @@ const TOUCH_BINDINGS = {
  */
 function bindTouchButtons() {
     Object.entries(TOUCH_BINDINGS).forEach(([buttonId, keyName]) => {
-        let button = document.getElementById(buttonId);
-        button.addEventListener('touchstart', (event) => setTouchState(event, keyName, true), { passive: false });
-        button.addEventListener('touchend', (event) => setTouchState(event, keyName, false));
-        button.addEventListener('touchcancel', (event) => setTouchState(event, keyName, false));
-        button.addEventListener('contextmenu', (event) => event.preventDefault());
+        let touchButton = document.getElementById(buttonId);
+        touchButton.addEventListener('touchstart', (event) => setTouchState(event, keyName, true), { passive: false });
+        touchButton.addEventListener('touchend', (event) => setTouchState(event, keyName, false));
+        touchButton.addEventListener('touchcancel', (event) => setTouchState(event, keyName, false));
+        touchButton.addEventListener('contextmenu', (event) => event.preventDefault());
     });
 }
 
