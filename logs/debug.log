@@ -74,4 +74,6 @@
 - Pause button only visible while the game is running
 - Removed drawFrame (blue debug hitboxes) from DrawableObject and World.addToMap
 - World: max 5 bottles (isBottleBagFull), max 5 coins; convertCoinsToBottle on 5th coin or after a throw when space is free
+- Character: idle animation, sleep animation after 10 s without action with snoring (updateLastAction, isSleeping, playIdleAnimation, playTimedAnimation, stopCharacterSounds)
+- sounds.js: snoring sound
 - index.html: added script tags for new classes

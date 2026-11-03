@@ -43,8 +43,35 @@ class Character extends MovableObject {
   ];
   
 
+  IMAGES_IDLE = [
+    "assets/img/2_character_pepe/1_idle/idle/I-1.png",
+    "assets/img/2_character_pepe/1_idle/idle/I-2.png",
+    "assets/img/2_character_pepe/1_idle/idle/I-3.png",
+    "assets/img/2_character_pepe/1_idle/idle/I-4.png",
+    "assets/img/2_character_pepe/1_idle/idle/I-5.png",
+    "assets/img/2_character_pepe/1_idle/idle/I-6.png",
+    "assets/img/2_character_pepe/1_idle/idle/I-7.png",
+    "assets/img/2_character_pepe/1_idle/idle/I-8.png",
+    "assets/img/2_character_pepe/1_idle/idle/I-9.png",
+    "assets/img/2_character_pepe/1_idle/idle/I-10.png",
+  ];
+
+  IMAGES_LONG_IDLE = [
+    "assets/img/2_character_pepe/1_idle/long_idle/I-11.png",
+    "assets/img/2_character_pepe/1_idle/long_idle/I-12.png",
+    "assets/img/2_character_pepe/1_idle/long_idle/I-13.png",
+    "assets/img/2_character_pepe/1_idle/long_idle/I-14.png",
+    "assets/img/2_character_pepe/1_idle/long_idle/I-15.png",
+    "assets/img/2_character_pepe/1_idle/long_idle/I-16.png",
+    "assets/img/2_character_pepe/1_idle/long_idle/I-17.png",
+    "assets/img/2_character_pepe/1_idle/long_idle/I-18.png",
+    "assets/img/2_character_pepe/1_idle/long_idle/I-19.png",
+    "assets/img/2_character_pepe/1_idle/long_idle/I-20.png",
+  ];
+
   world;
   deathTime = 0;
+  lastActionTime = new Date().getTime();
   IMAGE_GRAVE = "assets/img/2_character_pepe/5_dead/Pepe am Grab mit Sombrero.webp";
 
   constructor() {
@@ -54,6 +81,8 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_DEAD);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages([this.IMAGE_GRAVE]);
+    this.loadImages(this.IMAGES_IDLE);
+    this.loadImages(this.IMAGES_LONG_IDLE);
     this.applyGravity();
     this.animate();
   }
@@ -67,7 +96,8 @@ class Character extends MovableObject {
    * Moves Pepe according to the pressed keys and updates the camera.
    */
   moveCharacter() {
-    if (this.isDead()) return stopLoop('running');
+    if (this.isDead()) return this.stopCharacterSounds();
+    this.updateLastAction();
     this.handleWalking();
     if (this.world.keyboard.UP && !this.isAboveGround()) {
       this.jump();
@@ -103,7 +133,57 @@ class Character extends MovableObject {
       this.playAnimation(this.IMAGES_JUMPING);
     } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
       this.playAnimation(this.IMAGES_WALKING);
+    } else {
+      this.playIdleAnimation();
     }
+  }
+
+  /**
+   * Resets the idle timer whenever Pepe acts or gets hurt.
+   */
+  updateLastAction() {
+    let keyboard = this.world.keyboard;
+    if (keyboard.LEFT || keyboard.RIGHT || keyboard.UP || keyboard.SPACE || this.isHurt()) {
+      this.lastActionTime = new Date().getTime();
+      stopLoop('snoring');
+    }
+  }
+
+  /**
+   * @returns {boolean} True if Pepe has been inactive for 10 seconds.
+   */
+  isSleeping() {
+    return new Date().getTime() - this.lastActionTime > 10000;
+  }
+
+  /**
+   * Plays the idle or sleep animation, with snoring while asleep.
+   */
+  playIdleAnimation() {
+    if (this.isSleeping()) {
+      this.playTimedAnimation(this.IMAGES_LONG_IDLE, 250);
+      playLoop('snoring');
+    } else {
+      this.playTimedAnimation(this.IMAGES_IDLE, 200);
+    }
+  }
+
+  /**
+   * Shows the frame that belongs to the current time.
+   * @param {string[]} images - The animation frames.
+   * @param {number} frameTime - Duration of one frame in milliseconds.
+   */
+  playTimedAnimation(images, frameTime) {
+    let frameIndex = Math.floor(new Date().getTime() / frameTime) % images.length;
+    this.img = this.imageCache[images[frameIndex]];
+  }
+
+  /**
+   * Stops all sounds that belong to Pepe.
+   */
+  stopCharacterSounds() {
+    stopLoop('running');
+    stopLoop('snoring');
   }
 
   /**

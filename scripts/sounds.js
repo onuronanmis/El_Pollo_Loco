@@ -8,6 +8,7 @@ const GAME_SOUNDS = {
     splat: createSound('audio/universfield-wet-splat-impact-567197.mp3', 0.5),
     chickenWalk: createSound('audio/hühnchen.mp3', 0.3, true),
     chickWalk: createSound('audio/kücken-sound.mp3', 0.3, true),
+    snoring: createSound('audio/audiopapkin-male-snoring-297875.mp3', 0.3, true),
 };
 let isBossFight = false;
 
