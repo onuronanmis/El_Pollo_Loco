@@ -9,16 +9,36 @@ body{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    font-family: 'Rye', serif;
+}
+
+button{
+    font-family: inherit;
 }
 
 canvas{
+    display: block;
+    width: 100%;
+    height: 100%;
     background-color: black;
+}
+
+.game-page{
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: manipulation;
 }
 
 .game-container{
     position: relative;
-    width: 720px;
-    height: 480px;
+    width: min(720px, 100vw, 150vh);
+    width: min(720px, 100vw, 150dvh);
+    aspect-ratio: 3 / 2;
+    touch-action: none;
 }
 
 .start-screen{
@@ -30,7 +50,7 @@ canvas{
     padding-bottom: 40px;
     box-sizing: border-box;
     background-image: url("assets/img/9_intro_outro_screens/start/startscreen_1.png");
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
 .start-button{
@@ -157,6 +177,78 @@ canvas{
     border: 3px solid white;
     border-radius: 12px;
     cursor: pointer;
+}
+
+.mobile-controls{
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.control-group{
+    display: flex;
+    gap: 12px;
+}
+
+.touch-button{
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    touch-action: none;
+}
+
+.rotate-hint{
+    display: none;
+}
+
+@media (pointer: coarse), (max-width: 1024px){
+    .mobile-controls{
+        display: flex;
+    }
+}
+
+@media (orientation: portrait) and (max-width: 1024px){
+    .rotate-hint{
+        display: flex;
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+        background-color: #e8590c;
+    }
+}
+
+@media (max-height: 500px){
+    .start-button{
+        padding: 8px 32px;
+        font-size: 18px;
+    }
+
+    .end-button{
+        padding: 6px 16px;
+        font-size: 14px;
+    }
+
+    .pause-title{
+        font-size: 40px;
+    }
 }
 
 .display-none{

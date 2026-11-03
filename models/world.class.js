@@ -171,6 +171,7 @@ class World{
                 this.stompEnemy(enemy);
             } else if (!this.character.isHurt()) {
                 this.character.hit(this.getEnemyDamage(enemy));
+                playSound('pepeHurt');
                 this.healthBar.setPercentage(this.character.energy);
             }
         });

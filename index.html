@@ -2,9 +2,10 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>El Pollo Loco</title>
     <link rel="icon" type="image/webp" href="assets/img/Favicon-El-Pollo-Loco.webp">
+    <link rel="stylesheet" href="css/font.css">
     <link rel="stylesheet" href="style.css">
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
@@ -31,7 +32,9 @@
     <script src="scripts/sounds.js"></script>
     <script src="scripts/game.js"></script>
 </head>
-<body onload="initPage()">
+<body class="game-page" onload="initPage()">
+    <div class="rotate-hint">Bitte drehe dein Gerät ins Querformat 🔄</div>
+
     <div class="game-container" id="game-container">
         <canvas id="canvas" width="720" height="480"></canvas>
 
@@ -65,6 +68,17 @@
                 <button class="end-button" id="pause-menu-button">Hauptmenü</button>
                 <button class="end-button" id="pause-restart-button">Neustart</button>
                 <button class="end-button" id="resume-button">Weiter</button>
+            </div>
+        </div>
+
+        <div class="mobile-controls display-none" id="mobile-controls">
+            <div class="control-group">
+                <button class="touch-button" id="touch-left">◀</button>
+                <button class="touch-button" id="touch-right">▶</button>
+            </div>
+            <div class="control-group">
+                <button class="touch-button" id="touch-jump">▲</button>
+                <button class="touch-button" id="touch-throw">🌶️</button>
             </div>
         </div>
 

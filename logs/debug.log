@@ -81,4 +81,13 @@
 - sounds.js: endboss music now endboss-level1scream.mp3
 - index.html/impressum.html: favicon (Favicon-El-Pollo-Loco.webp)
 - Character: start y 155 (on the ground, no fall at game start)
+- sounds.js: pepeHurt (pepe-outch.mp3), played when Pepe takes damage
+- style.css: start screen image stretched to full size (background-size 100% 100%)
+- Mobile: game container scales (min(720px, 100vw, 150vh), 3:2), canvas fills container, game-page without scrolling
+- Mobile: touch buttons (left, right, jump, throw) only on touch/tablet size and during the game, context menu disabled
+- game.js: TOUCH_BINDINGS, bindTouchButtons, setTouchState, setGameButtonsVisible
+- Mobile: rotate hint in portrait (CSS only), smaller buttons for max-height 500px
+- game.js: PORTRAIT_QUERY + handleOrientationChange pause the game when turned to portrait
+- Mobile: viewport without zoom, 100dvh for iOS, overscroll-behavior none, touch-action against panning and zooming
+- Font Rye: css/font.css path fixed (../assets/fonts), linked in index.html and impressum.html, used for body and buttons
 - index.html: added script tags for new classes

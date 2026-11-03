@@ -14,6 +14,8 @@ let isPaused = false;
 function initPage() {
     loadMuteState();
     bindButtons();
+    bindTouchButtons();
+    PORTRAIT_QUERY.addEventListener('change', handleOrientationChange);
     document.addEventListener('click', updateMusicState, { once: true });
     document.addEventListener('keydown', updateMusicState, { once: true });
 }
@@ -88,7 +90,7 @@ function startGame() {
         initLevel();
         canvas = document.getElementById('canvas');
         world = new World(canvas, keyboard);
-        document.getElementById('pause-button').classList.remove('display-none');
+        setGameButtonsVisible(true);
     }, 2500);
 }
 
@@ -165,7 +167,7 @@ function stopGame() {
     isPaused = false;
     document.getElementById('pause-screen').classList.add('display-none');
     document.getElementById('pause-button').textContent = '⏸';
-    document.getElementById('pause-button').classList.add('display-none');
+    setGameButtonsVisible(false);
     Object.values(GAME_SOUNDS).forEach((sound) => sound.pause());
     setBossFight(false);
 }
@@ -246,6 +248,61 @@ const KEY_BINDINGS = {
 function setKeyState(event, isPressed) {
     let keyName = KEY_BINDINGS[event.code];
     if (keyName) keyboard[keyName] = isPressed;
+}
+
+
+/**
+ * Shows or hides the buttons that are only needed during the game.
+ * @param {boolean} isVisible - True while the game is running.
+ */
+function setGameButtonsVisible(isVisible) {
+    document.getElementById('pause-button').classList.toggle('display-none', !isVisible);
+    document.getElementById('mobile-controls').classList.toggle('display-none', !isVisible);
+}
+
+
+const PORTRAIT_QUERY = window.matchMedia('(orientation: portrait) and (max-width: 1024px)');
+
+
+/**
+ * Pauses the running game when the device is turned to portrait mode.
+ */
+function handleOrientationChange() {
+    if (PORTRAIT_QUERY.matches && !isPaused) togglePause();
+}
+
+
+const TOUCH_BINDINGS = {
+    'touch-left': 'LEFT',
+    'touch-right': 'RIGHT',
+    'touch-jump': 'UP',
+    'touch-throw': 'SPACE',
+};
+
+
+/**
+ * Connects the mobile touch buttons with the keyboard flags.
+ */
+function bindTouchButtons() {
+    Object.entries(TOUCH_BINDINGS).forEach(([buttonId, keyName]) => {
+        let button = document.getElementById(buttonId);
+        button.addEventListener('touchstart', (event) => setTouchState(event, keyName, true), { passive: false });
+        button.addEventListener('touchend', (event) => setTouchState(event, keyName, false));
+        button.addEventListener('touchcancel', (event) => setTouchState(event, keyName, false));
+        button.addEventListener('contextmenu', (event) => event.preventDefault());
+    });
+}
+
+
+/**
+ * Sets a keyboard flag from a touch event.
+ * @param {TouchEvent} event - The touch event.
+ * @param {string} keyName - The keyboard flag to set.
+ * @param {boolean} isPressed - True while the button is touched.
+ */
+function setTouchState(event, keyName, isPressed) {
+    event.preventDefault();
+    keyboard[keyName] = isPressed;
 }
 
 

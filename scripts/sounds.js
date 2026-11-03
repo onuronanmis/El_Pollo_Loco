@@ -9,6 +9,7 @@ const GAME_SOUNDS = {
     chickenWalk: createSound('audio/hühnchen.mp3', 0.3, true),
     chickWalk: createSound('audio/kücken-sound.mp3', 0.3, true),
     endbossHit: createSound('audio/endboss-chicken.mp3', 0.5),
+    pepeHurt: createSound('audio/pepe-outch.mp3', 0.5),
     snoring: createSound('audio/audiopapkin-male-snoring-297875.mp3', 0.3, true),
 };
 let isBossFight = false;
