@@ -96,3 +96,5 @@
 - Renamed classes cloud -> Cloud, level -> Level (level1.js updated)
 - Renamed keybord.class.js -> keyboard.class.js (index.html updated)
 - Added JSDoc to all remaining functions and constructors
+- index.html: story section in menu
+- Fullscreen button (always visible, between pause and mute): toggleFullscreen, initFullscreenButton, hidden if not supported; game container fills screen in fullscreen (3:2)

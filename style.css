@@ -77,7 +77,7 @@ canvas{
     height: 80%;
 }
 
-.mute-button, .menu-button, .pause-button{
+.mute-button, .menu-button, .pause-button, .fullscreen-button{
     position: absolute;
     top: 10px;
     width: 40px;
@@ -93,8 +93,17 @@ canvas{
     right: 60px;
 }
 
-.pause-button{
+.fullscreen-button{
     right: 110px;
+}
+
+.pause-button{
+    right: 160px;
+}
+
+:fullscreen .game-container{
+    width: min(100vw, 150vh);
+    width: min(100vw, 150dvh);
 }
 
 .pause-title{

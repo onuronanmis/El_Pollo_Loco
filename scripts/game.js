@@ -34,6 +34,33 @@ function bindButtons() {
     });
     bindEndScreenButtons();
     bindPauseButtons();
+    initFullscreenButton();
+}
+
+
+/**
+ * Switches the page into or out of fullscreen mode.
+ */
+function toggleFullscreen() {
+    document.activeElement.blur();
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else {
+        document.documentElement.requestFullscreen();
+    }
+}
+
+
+/**
+ * Connects the fullscreen button or hides it if fullscreen is not supported.
+ */
+function initFullscreenButton() {
+    let fullscreenButton = document.getElementById('fullscreen-button');
+    if (!document.fullscreenEnabled) return fullscreenButton.classList.add('display-none');
+    fullscreenButton.addEventListener('click', toggleFullscreen);
+    document.addEventListener('fullscreenchange', () => {
+        fullscreenButton.textContent = document.fullscreenElement ? '🗗' : '⛶';
+    });
 }
 
 
