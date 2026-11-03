@@ -4,6 +4,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let isMuted = false;
+let intervalIds = [];
 
 
 /**
@@ -25,6 +26,8 @@ function bindButtons() {
     document.getElementById('mute-button').addEventListener('click', toggleMute);
     document.getElementById('menu-button').addEventListener('click', openMenu);
     document.getElementById('close-button').addEventListener('click', closeMenu);
+    document.getElementById('menu-return-button').addEventListener('click', returnToMenu);
+    document.getElementById('next-level-button').addEventListener('click', startNextLevel);
     document.getElementById('menu-overlay').addEventListener('click', (event) => {
         if (event.target.id == 'menu-overlay') closeMenu();
     });
@@ -93,46 +96,80 @@ function closeMenu() {
 }
 
 
-window.addEventListener('keydown', (e) => {
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = true;
-    }
+/**
+ * Starts an interval that can be stopped together with all others.
+ * @param {Function} callback - The function to repeat.
+ * @param {number} time - Delay in milliseconds.
+ * @returns {number} The interval id.
+ */
+function setStoppableInterval(callback, time) {
+    let intervalId = setInterval(callback, time);
+    intervalIds.push(intervalId);
+    return intervalId;
+}
 
-    if (e.keyCode == 37) {
-        keyboard.LEFT = true;
-    }
 
-    if (e.keyCode == 38) {
-        keyboard.UP = true;
-    }
+/**
+ * Stops all game intervals, the drawing loop and all looping sounds.
+ */
+function stopGame() {
+    intervalIds.forEach((intervalId) => clearInterval(intervalId));
+    intervalIds = [];
+    world.stopDrawing();
+    Object.values(GAME_SOUNDS).forEach((sound) => sound.pause());
+}
 
-    if (e.keyCode == 40) {
-        keyboard.DOWN = true;
-    }
 
-    if (e.keyCode == 32) {
-        keyboard.SPACE = true;
-    }
-});
+/**
+ * Stops the game and shows the win screen.
+ */
+function showWinScreen() {
+    stopGame();
+    document.getElementById('win-screen').classList.remove('display-none');
+}
 
-window.addEventListener('keyup', (e) => {
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
 
-    if (e.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
+/**
+ * Returns from the win screen to the start screen.
+ */
+function returnToMenu() {
+    document.activeElement.blur();
+    document.getElementById('win-screen').classList.add('display-none');
+    document.getElementById('start-screen').classList.remove('display-none');
+}
 
-    if (e.keyCode == 38) {
-        keyboard.UP = false;
-    }
 
-    if (e.keyCode == 40) {
-        keyboard.DOWN = false;
-    }
+/**
+ * Starts the next level. Until level 2 exists, level 1 is started again.
+ */
+function startNextLevel() {
+    document.getElementById('win-screen').classList.add('display-none');
+    startGame();
+}
 
-    if (e.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-});
+
+const KEY_BINDINGS = {
+    ArrowLeft: 'LEFT',
+    KeyA: 'LEFT',
+    ArrowRight: 'RIGHT',
+    KeyD: 'RIGHT',
+    ArrowUp: 'UP',
+    KeyW: 'UP',
+    ArrowDown: 'DOWN',
+    Space: 'SPACE',
+};
+
+
+/**
+ * Sets the keyboard flag that belongs to the pressed or released key.
+ * @param {KeyboardEvent} event - The keyboard event.
+ * @param {boolean} isPressed - True on keydown, false on keyup.
+ */
+function setKeyState(event, isPressed) {
+    let keyName = KEY_BINDINGS[event.code];
+    if (keyName) keyboard[keyName] = isPressed;
+}
+
+
+window.addEventListener('keydown', (event) => setKeyState(event, true));
+window.addEventListener('keyup', (event) => setKeyState(event, false));

@@ -19,6 +19,6 @@ class Coin extends MovableObject {
      * Lets the coin pulse between its two images.
      */
     animate(){
-        setInterval(() => this.playAnimation(this.IMAGES_COIN), 300);
+        setStoppableInterval(() => this.playAnimation(this.IMAGES_COIN), 300);
     }
 }

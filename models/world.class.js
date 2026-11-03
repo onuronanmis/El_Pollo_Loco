@@ -6,6 +6,8 @@ class World{
     grinder = new Grinder();
     thrownBottles = [];
     lastThrow = 0;
+    isGameOver = false;
+    animationFrameId;
     level = level1;
     canvas;
     ctx;
@@ -23,7 +25,7 @@ class World{
     }
 
     checkFastActions(){
-        setInterval(() => {
+        setStoppableInterval(() => {
             this.checkEnemyCollisions();
             this.checkThrowing();
             this.checkBottleHits();
@@ -77,13 +79,21 @@ class World{
     }
 
     checkCollisions(){
-        setInterval(() => {
+        setStoppableInterval(() => {
             this.checkGrinderFeeding();
             this.checkDrumstickPickup();
             this.checkBottlePickup();
             this.checkCoinPickup();
             this.updateEnemySounds();
+            this.checkGameEnd();
         }, 200);
+    }
+
+    checkGameEnd(){
+        let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss);
+        if (this.isGameOver || !endboss.isDead()) return;
+        this.isGameOver = true;
+        setTimeout(() => showWinScreen(), 2000);
     }
 
     updateEnemySounds(){
@@ -208,9 +218,13 @@ class World{
         this.addToMap(this.bottleBar);
 
         let self = this;
-        requestAnimationFrame(function(){
+        this.animationFrameId = requestAnimationFrame(function(){
             self.draw()
         });
+    }
+
+    stopDrawing(){
+        cancelAnimationFrame(this.animationFrameId);
     }
 
     addObjectsToMap(objects){

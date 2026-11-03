@@ -118,6 +118,37 @@ canvas{
     cursor: pointer;
 }
 
+.end-screen{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.end-image{
+    height: 60%;
+}
+
+.end-buttons{
+    display: flex;
+    gap: 16px;
+}
+
+.end-button{
+    padding: 10px 28px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: #e8590c;
+    border: 3px solid white;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
 .display-none{
     display: none !important;
 }

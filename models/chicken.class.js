@@ -19,11 +19,11 @@ class Chicken extends MovableObject{
     }
 
         animate() {
-            setInterval(() => {
+            setStoppableInterval(() => {
                 if (!this.isDead()) this.moveLeft();
             }, 1000 / 60)
 
-            setInterval(() => {
+            setStoppableInterval(() => {
                 if (this.isDead()) {
                     this.img = this.imageCache[this.IMAGE_DEAD];
                 } else {

@@ -30,7 +30,7 @@ class Grinder extends MovableObject {
    * Plays the endless roller animation.
    */
   animate() {
-    setInterval(() => this.playAnimation(this.IMAGES_IDLE), 1000 / 12);
+    setStoppableInterval(() => this.playAnimation(this.IMAGES_IDLE), 1000 / 12);
   }
 
   /**

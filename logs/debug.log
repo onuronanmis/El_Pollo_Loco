@@ -57,4 +57,11 @@
 - Sounds: jump + running (Character), splat (chicken/chick death, grinder), bottle break (splash), collect (coin/bottle)
 - World: updateEnemySounds (chicken/chick walking loop while visible), isOnScreen
 - Endboss: boss music on alert, back to background music on death
+- game.js: KEY_BINDINGS + setKeyState (A/← left, D/→ right, W/↑ jump, Space throw) replace keyCode listeners
+- index.html: controls in menu updated
+- index.html: credits section in menu (Developer Akademie, ChatGPT images, Pixabay music and sounds)
+- game.js: setStoppableInterval, stopGame, showWinScreen, returnToMenu, startNextLevel (restarts level 1 for now)
+- All classes: setInterval replaced by setStoppableInterval
+- World: checkGameEnd (win screen 2 s after endboss death), animationFrameId + stopDrawing
+- index.html/style.css: win screen (You won A.png) with buttons Hauptmenü and Nächstes Level
 - index.html: added script tags for new classes

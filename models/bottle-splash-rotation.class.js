@@ -40,7 +40,7 @@ class Bottle extends MovableObject {
    * Lets the bottle spin in the air.
    */
   animateRotation() {
-    setInterval(() => this.playAnimation(this.IMAGES_ROTATION), 250);
+    setStoppableInterval(() => this.playAnimation(this.IMAGES_ROTATION), 250);
   }
 
   /**
@@ -50,7 +50,7 @@ class Bottle extends MovableObject {
   throwBottle(isThrownLeft) {
     this.speedY = 20;
     this.applyGravity();
-    let flightInterval = setInterval(() => {
+    let flightInterval = setStoppableInterval(() => {
       if (this.isSplashing) return clearInterval(flightInterval);
       this.x += isThrownLeft ? -15 : 15;
       this.playAnimation(this.IMAGES_ROTATION);
@@ -68,7 +68,7 @@ class Bottle extends MovableObject {
     this.acceleration = 0;
     this.currentImage = 0;
     this.width = 105;
-    let splashInterval = setInterval(() => {
+    let splashInterval = setStoppableInterval(() => {
       if (this.currentImage < this.IMAGES_SPLASH.length) {
         this.img = this.imageCache[this.IMAGES_SPLASH[this.currentImage]];
         this.currentImage++;
