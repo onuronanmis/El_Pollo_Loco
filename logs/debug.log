@@ -91,3 +91,5 @@
 - Mobile: viewport without zoom, 100dvh for iOS, overscroll-behavior none, touch-action against panning and zooming
 - Font Rye: css/font.css path fixed (../assets/fonts), linked in index.html and impressum.html, used for body and buttons
 - index.html: added script tags for new classes
+- Character: knockBack (push away from enemy with small bounce), applyKnockback (slows down, stays in level borders)
+- World: chicken/chick contact knocks Pepe back, endboss does not

@@ -5,6 +5,7 @@ class Character extends MovableObject {
   offset = { top: 110, bottom: 10, left: 20, right: 20 };
   bottleCount = 0;
   coinCount = 0;
+  knockbackSpeed = 0;
   IMAGES_WALKING = [
     "assets/img/2_character_pepe/2_walk/W-21.png",
     "assets/img/2_character_pepe/2_walk/W-22.png",
@@ -98,6 +99,7 @@ class Character extends MovableObject {
   moveCharacter() {
     if (this.isDead()) return this.stopCharacterSounds();
     this.updateLastAction();
+    this.applyKnockback();
     this.handleWalking();
     if (this.world.keyboard.UP && !this.isAboveGround()) {
       this.jump();
@@ -119,6 +121,27 @@ class Character extends MovableObject {
       this.moveLeft();
       this.otherDirection = true;
     }
+  }
+
+  /**
+   * Pushes Pepe away from the enemy with a small bounce.
+   * @param {MovableObject} enemy - The enemy Pepe collided with.
+   */
+  knockBack(enemy) {
+    const isEnemyRight = this.x + this.width / 2 < enemy.x + enemy.width / 2;
+    this.knockbackSpeed = isEnemyRight ? -12 : 12;
+    this.speedY = 12;
+  }
+
+  /**
+   * Moves Pepe by the current knockback and slows it down.
+   */
+  applyKnockback() {
+    if (this.knockbackSpeed === 0) return;
+    const newX = this.x + this.knockbackSpeed;
+    this.x = Math.max(-520, Math.min(newX, this.world.level.level_end_x));
+    this.knockbackSpeed *= 0.85;
+    if (Math.abs(this.knockbackSpeed) < 1) this.knockbackSpeed = 0;
   }
 
   /**
